@@ -36,9 +36,9 @@ jobs:
         run: uv run ruff format --preview
 
       - name: "Run pyright check"
-        run: uv run pyright -p src/$(uv version | cut -f 1 -d ' ')
+        run: uv run pyright -p src/$(uv version | cut -f 1 -d ' ' | tr '-' '_')
 
       - name: "Run tests"
         run: |
           uv run python -m unittest discover \
-             -s src/$(uv version | cut -f 1 -d ' ') -p "*_test.py"
+             -s src/$(uv version | cut -f 1 -d ' ' | tr '-' '_') -p "*_test.py"
