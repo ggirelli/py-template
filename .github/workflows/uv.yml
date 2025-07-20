@@ -26,11 +26,6 @@ jobs:
       - name: "Set up Python"
         uses: actions/setup-python@v5.6.0
 
-      - name: "Authenticate to access private GitHub repos"
-        run: |
-          echo "${{ secrets.CUCOO_READ }}" | gh auth login --with-token
-          gh auth setup-git
-
       - name: "Install the project"
         run: uv sync --locked --all-extras --dev
 
