@@ -1,0 +1,49 @@
+name: uv
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    types: ["opened", "synchronize", "ready_for_review"]
+    branches: ["main"]
+
+jobs:
+  uv_test:
+    # This disables the job on draft PRs.
+    if: github.event.pull_request.draft == false
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.7.20"
+          enable-cache: true
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v5.6.0
+
+      - name: "Authenticate to access private GitHub repos"
+        run: |
+          echo "${{ secrets.CUCOO_READ }}" | gh auth login --with-token
+          gh auth setup-git
+
+      - name: "Install the project"
+        run: uv sync --locked --all-extras --dev
+
+      - name: "Run ruff check"
+        run: uv run ruff check --preview
+
+      - name: "Run ruff format"
+        run: uv run ruff format --preview
+
+      - name: "Run pyright check"
+        run: uv run pyright -p src/$(uv version | cut -f 1 -d ' ')
+
+      - name: "Run tests"
+        run: |
+          uv run python -m unittest discover \
+             -s src/$(uv version | cut -f 1 -d ' ') -p "*_test.py"

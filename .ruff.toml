@@ -1,0 +1,128 @@
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+line-length = 80
+indent-width = 4
+
+target-version = "py313"
+
+[lint]
+preview = true
+select = [
+    "A",
+    "ANN",
+    "ARG",
+    "B",
+    "BLE",
+    "C",
+    "C4",
+    "C90",
+    "COM",
+    "CPY", # still in preview mode, might be unstable
+    "D",
+    "DOC",  # still in preview mode, might be unstable
+    "E",
+    "F",
+    "FA",
+    "FBT",
+    "FLY",
+    "FURB",
+    "I",
+    "INP",
+    "LOG",
+    "N",
+    "NPY",
+    "PERF",
+    "PIE",
+    "PL",
+    "PTH",
+    "PYI",
+    "Q",
+    "RET",
+    "RSE",
+    "RUF",
+    "S",
+    "SIM",
+    "SLF",
+    "SLOT",
+    "T",
+    "T20",
+    "TC",
+    "TD",
+    "TID",
+    "TRY",
+    "UP",
+    "W",
+    "YTT",
+]
+per-file-ignores = { "__init__.py" = ["CPY001", "D"] }
+ignore = [
+    "COM812",  # disabled because it interferes with `ruff format`.
+    "D203",
+    "D213",
+    "D417",
+    "PLR2004",
+    "TD003",   # do not require links in TODO comments
+    "TRY003",  # https://github.com/guilatrova/tryceratops/issues/78
+]
+
+pydocstyle.convention = "google"
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[lint.mccabe]
+max-complexity = 16
+
+[lint.pycodestyle]
+max-doc-length = 80
+
+[lint.pylint]
+max-args = 8
+max-branches = 16
+
+[format]
+preview = true
+
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
