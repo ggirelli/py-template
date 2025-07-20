@@ -1,6 +1,6 @@
 .PHONY: all clean test
 
-PACKAGE_NAME=$(uv version | cut -d " " -f 1)
+PACKAGE_NAME=$(shell uv version | cut -f 1 -d ' ' | tr '-' '_')
 
 pre-commit:
 	uv run pre-commit run --all-files
